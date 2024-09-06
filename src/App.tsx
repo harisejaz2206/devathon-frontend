@@ -11,7 +11,7 @@ function App() {
   //     console.log("Token set globally");
   //   }
   // }, [token]);
-  
+  // console.log
   return (
     <BrowserRouter>
       <Routes>
