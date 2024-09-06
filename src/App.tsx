@@ -7,6 +7,16 @@ import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/Layout";
 
 function App() {
+  // const token = useSelector(selectAuthToken);
+
+  // useLayoutEffect(() => {
+  //   if (token) {
+  //     HttpService.setToken(token);
+  //     localStorage.setItem("token", token);
+  //     console.log("Token set globally");
+  //   }
+  // }, [token]);
+
   return (
     <BrowserRouter>
       <Layout>
