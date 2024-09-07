@@ -10,7 +10,7 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../assets/images/logo.png";
 import Profile from "../assets/images/profile.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { useTranslation } from "react-i18next";
 
@@ -18,6 +18,13 @@ export default function Navbar() {
   const { currentLanguage, changeLanguage } = useLanguage();
   const { t } = useTranslation("header");
   const isRTL = currentLanguage === "ur";
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login"); // Redirect to login page after logout
+  };
 
   return (
     <Disclosure as="nav" className="bg-white shadow-md">
@@ -36,11 +43,24 @@ export default function Navbar() {
           {/* Centered Navigation Links */}
           <div className="flex flex-1 justify-center">
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <NavLink href="/dashboard" text={t("dashboard")} />
-              <NavLink href="/patients" text={t("patients")} />
-              <NavLink href="/appointments" text={t("appointments")} />
-              <NavLink href="/billing" text={t("billing")} />
-              <NavLink href="/reports" text={t("reports")} />
+              {token ? (
+                <>
+                  <NavLink href="/dashboard" text={t("dashboard")} />
+                  <NavLink href="/patients" text={t("patients")} />
+                  <NavLink href="/appointments" text={t("appointments")} />
+                  <NavLink href="/billing" text={t("billing")} />
+                  <NavLink href="/reports" text={t("reports")} />
+                  <NavLink href="/find-doctor" text={t("Find Doctor")} />
+                </>
+              ) : (
+                <>
+                  <NavLink href="/dashboard" text={t("dashboard")} />
+                  <NavLink href="/patients" text={t("patients")} />
+                  <NavLink href="/appointments" text={t("appointments")} />
+                  <NavLink href="/billing" text={t("billing")} />
+                  <NavLink href="/reports" text={t("reports")} />
+                </>
+              )}
             </div>
           </div>
 
@@ -92,7 +112,7 @@ export default function Navbar() {
                     to="/profile"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
-                    Your Profile
+                    {t("My Profile")}
                   </Link>
                 </MenuItem>
                 <MenuItem>
@@ -100,60 +120,84 @@ export default function Navbar() {
                     to="#"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
-                    Settings
+                    {t("Settings")}
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link
-                    to="#"
+                  <button
+                    onClick={handleLogout}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
-                    Sign out
-                  </Link>
+                    {t("Logout")}
+                  </button>
                 </MenuItem>
               </MenuItems>
             </Menu>
 
             {/* Login/Signup Buttons */}
-            <Link
-              to="/login"
-              className="hidden sm:block text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-            >
-              {t("login")}
-            </Link>
-            <Link
-              to="/register"
-              className="hidden sm:block text-white bg-indigo-600 hover:bg-indigo-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
-              {t("signup")}
-            </Link>
+            {!token && (
+              <>
+                <Link
+                  to="/login"
+                  className="hidden sm:block text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  {t("login")}
+                </Link>
+                <Link
+                  to="/register"
+                  className="hidden sm:block text-white bg-indigo-600 hover:bg-indigo-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  {t("signup")}
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
 
       <DisclosurePanel className="sm:hidden bg-white">
         <div className="space-y-1 pb-4 pt-2">
-          <MobileNavLink href="#" text="Dashboard" active />
-          <MobileNavLink href="#" text="Team" />
-          <MobileNavLink href="#" text="Projects" />
-          <MobileNavLink href="#" text="Calendar" />
-          <Link
-            to="/login"
-            className="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-          >
-            Login
-          </Link>
-          <Link
-            to="/signup"
-            className="block px-4 py-2 text-base font-medium text-gray-700 bg-indigo-600 hover:bg-indigo-700 hover:text-white"
-          >
-            Sign up
-          </Link>
+          <MobileNavLink href="/dashboard" text={t("dashboard")} active />
+          <MobileNavLink href="/patients" text={t("patients")} />
+          <MobileNavLink href="/appointments" text={t("appointments")} />
+          <MobileNavLink href="/billing" text={t("billing")} />
+          <MobileNavLink href="/reports" text={t("reports")} />
+          {!token ? (
+            <>
+              <Link
+                to="/login"
+                className="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              >
+                {t("login")}
+              </Link>
+              <Link
+                to="/register"
+                className="block px-4 py-2 text-base font-medium text-gray-700 bg-indigo-600 hover:bg-indigo-700 hover:text-white"
+              >
+                {t("signup")}
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/find-doctor"
+                className="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              >
+                {t("Find Doctor")}
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              >
+                {t("logout")}
+              </button>
+            </>
+          )}
           <button
             onClick={() => changeLanguage()}
             className="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
           >
-            {currentLanguage === "en" ? "Switch to Urdu" : "Switch to English"}
+            {currentLanguage === "en" ? t("switchur") : t("switchen")}
           </button>
         </div>
       </DisclosurePanel>
