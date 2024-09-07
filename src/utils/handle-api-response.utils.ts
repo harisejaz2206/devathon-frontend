@@ -1,5 +1,6 @@
 import { HttpStatusCode } from "axios";
 import { Toast } from "./toast.utils";
+import { toast } from "react-toastify";
 
 type HandleApiResponseParams = {
   result: any;
@@ -12,6 +13,8 @@ export const handleApiResponse = ({
   handleSuccess,
   formik,
 }: HandleApiResponseParams) => {
+  console.log("result.payload: ", result.payload);
+  console.log("result.payload.statusCode: ", result.payload.statusCode);
   if (result.payload && result.payload.statusCode) {
     switch (result.payload.statusCode) {
       case HttpStatusCode.Ok:
@@ -77,10 +80,11 @@ export const handleApiResponse = ({
         break;
 
       default:
-        Toast.fire({
-          icon: "error",
-          title: result.payload.message,
-        });
+        toast.error(result.payload.message)
+        // Toast.fire({
+        //   icon: "error",
+        //   title: result.payload.message,
+        // });
     }
   }
 };

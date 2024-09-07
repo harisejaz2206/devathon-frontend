@@ -13,7 +13,7 @@ import { IForgotPasswordInterface } from "../features/auth/interfaces/forgotpass
 import { IResetPasswordInterface } from "../features/auth/interfaces/resetpassword.interface";
 
 class AuthService extends HttpService {
-  private readonly prefix: string = "api/v1/";
+  private readonly prefix: string = "api/v1";
 
   /**
    * Handles user signup.
@@ -35,7 +35,10 @@ class AuthService extends HttpService {
   loginHandler = (
     data: ILogInInterface
   ): Promise<IResponseInterface<{ token: string; user: IUser }>> => {
-    return this.post(`${this.prefix}/login`, data);
+    return this.post(`${this.prefix}/login`, data).then((response) => {
+      console.log("Login Response:", response); // Log the response here
+      return response;
+    });
   };
 
   /**

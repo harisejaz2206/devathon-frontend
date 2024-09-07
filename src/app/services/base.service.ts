@@ -1,5 +1,5 @@
 import axios, { CancelTokenStatic, CancelTokenSource } from "axios";
-const Config = "http://localhost:400000";
+const Config = "http://localhost:4000";
 // const Config = "https://productionurl.com";
 export class HttpService {
   CancelToken: CancelTokenStatic;

@@ -6,7 +6,7 @@ import { IForgotPasswordInterface } from "./interfaces/forgotpassword.interface"
 import { IResetPasswordInterface } from "./interfaces/resetpassword.interface";
 
 export const signup = createAsyncThunk(
-  "auth/register",
+  "auth/signup",
   async (credentials: ISignUpInterface, { rejectWithValue }) => {
     try {
       const response = await authService.signupHandler(credentials);
@@ -24,8 +24,10 @@ export const login = createAsyncThunk(
   async (credentials: ILogInInterface, thunkAPI) => {
     try {
       const response = await authService.loginHandler(credentials);
+      console.log('response from thunk: ', response);
       return response;
     } catch (error: any) {
+      console.log("error", error)
       return thunkAPI.rejectWithValue(
         error.response?.data || "Error during login"
       );
