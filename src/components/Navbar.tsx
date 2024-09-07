@@ -23,6 +23,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/login"); // Redirect to login page after logout
   };
 

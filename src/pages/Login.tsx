@@ -158,7 +158,7 @@ export default function LoginForm() {
         <p className="mt-10 text-center text-sm text-gray-200">
           Not a member?{" "}
           <Link
-            to="/signup"
+            to="/register"
             className="font-semibold leading-6 text-white hover:text-gray-300 hover:underline"
           >
             Sign Up Now

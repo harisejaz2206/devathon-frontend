@@ -78,7 +78,7 @@ const registerSchema = Yup.object().shape({
     .oneOf(["Male", "Female", "Other"], "Invalid gender")
     .required("Gender is required"),
 
-  phone: Yup.string().required("Phone number is required"),
+  phone: Yup.string().optional(),
 
   address: Yup.string()
     .required("Address is required")

@@ -4,11 +4,13 @@ import { authService } from "../../services/auth.service";
 import { ILogInInterface } from "./interfaces/login.interface";
 import { IForgotPasswordInterface } from "./interfaces/forgotpassword.interface";
 import { IResetPasswordInterface } from "./interfaces/resetpassword.interface";
+import { log } from "console";
 
 export const signup = createAsyncThunk(
   "auth/signup",
   async (credentials: ISignUpInterface, { rejectWithValue }) => {
     try {
+      console.log("inside")
       const response = await authService.signupHandler(credentials);
       return response;
     } catch (error: any) {
