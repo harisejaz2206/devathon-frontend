@@ -35,8 +35,8 @@ export default function LoginForm() {
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg lg:max-w-xl">
-        <div className="bg-white px-8 py-12 shadow-lg rounded-lg sm:px-10">
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm md:max-w-md lg:max-w-md">
+        <div className="bg-white px-6 py-12 shadow-lg rounded-lg sm:px-8">
           <form className="space-y-6" onSubmit={() => {}}>
             {/* Email Field */}
             <InputField
@@ -54,13 +54,6 @@ export default function LoginForm() {
               placeholder="Password"
               className=""
             />
-
-            {/* Show/Hide Password */}
-            <div className="flex items-center justify-end text-sm text-blue-700 hover:text-blue-900 cursor-pointer">
-              <span onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? "Hide Password" : "Show Password"}
-              </span>
-            </div>
 
             {/* Remember Me Checkbox and Forgot Password Link */}
             <div className="flex items-center justify-between">
@@ -89,7 +82,7 @@ export default function LoginForm() {
         <p className="mt-10 text-center text-sm text-gray-200">
           Not a member?{" "}
           <Link
-            to="/signup"
+            to="/register"
             className="font-semibold leading-6 text-white hover:text-gray-300 hover:underline"
           >
             Sign Up Now
