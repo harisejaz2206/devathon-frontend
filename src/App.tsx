@@ -17,6 +17,7 @@ import Dashboard from "./components/Dashboard";
 import { Switch } from "@headlessui/react";
 import UserProfile from "./components/UserProfile";
 import VerifyEmail from "./components/VerifyEmail";
+import FindDoctor from "./pages/FindDoctor";
 
 function App() {
   const token = useSelector(selectAuthToken);
@@ -46,6 +47,7 @@ function App() {
             }
           />
           <Route path="/verify-account/:token" element={<VerifyEmail />} />
+          <Route path="/find-doctor" element={<FindDoctor />} />
         </Routes>
       </Layout>
       <ToastContainer />

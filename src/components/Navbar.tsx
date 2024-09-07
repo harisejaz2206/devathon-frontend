@@ -127,6 +127,12 @@ export default function Navbar() {
             >
               {t("signup")}
             </Link>
+            <Link
+              to="/find-doctor"
+              className="hidden sm:block text-white bg-teal-700 hover:bg-teal-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Find Doctor
+            </Link>
           </div>
         </div>
       </div>
