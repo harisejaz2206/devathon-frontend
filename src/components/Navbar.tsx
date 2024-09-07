@@ -11,12 +11,11 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../assets/images/logo.png";
 import Profile from "../assets/images/profile.png";
 import { Link } from "react-router-dom";
-import { useLanguage } from "../context/LanguageContext"; // Adjust the import path as needed
+import { useLanguage } from "../context/LanguageContext";
 import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
   const { currentLanguage, changeLanguage } = useLanguage();
-  console.log("🚀 ~ Navbar ~ currentLanguage:", currentLanguage);
   const { t } = useTranslation("header");
   const isRTL = currentLanguage === "ur";
 
@@ -52,7 +51,7 @@ export default function Navbar() {
               <div>
                 <MenuButton className="flex items-center text-gray-500 hover:text-gray-700">
                   <span className="sr-only">Select language</span>
-                  {currentLanguage === "en" ? "English" : "Urdu"}
+                  {currentLanguage === "en" ? t("english") : t("urdu")}
                 </MenuButton>
               </div>
               <MenuItems className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition">
@@ -61,9 +60,7 @@ export default function Navbar() {
                     onClick={() => changeLanguage()}
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
-                    {currentLanguage === "en"
-                      ? "Switch to Urdu"
-                      : "Switch to English"}
+                    {currentLanguage === "en" ? t("switchur") : t("switchen")}
                   </button>
                 </MenuItem>
               </MenuItems>
@@ -92,7 +89,7 @@ export default function Navbar() {
               <MenuItems className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition">
                 <MenuItem>
                   <Link
-                    to="#"
+                    to="/profile"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Your Profile
@@ -122,13 +119,13 @@ export default function Navbar() {
               to="/login"
               className="hidden sm:block text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
             >
-              Login
+              {t("login")}
             </Link>
             <Link
-              to="/signup"
-              className="hidden sm:block text-gray-700 bg-indigo-600 hover:bg-indigo-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              to="/register"
+              className="hidden sm:block text-white bg-indigo-600 hover:bg-indigo-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
             >
-              Sign up
+              {t("signup")}
             </Link>
           </div>
         </div>

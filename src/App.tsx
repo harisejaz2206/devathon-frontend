@@ -13,6 +13,9 @@ import { useSelector } from "react-redux";
 import { selectAuthToken } from "./app/features/auth/auth.selectors";
 import { HttpService } from "./app/services/base.service";
 import RegistrationForm from "./pages/Register";
+import Dashboard from "./components/Dashboard";
+import { Switch } from "@headlessui/react";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   const token = useSelector(selectAuthToken);
@@ -33,6 +36,14 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
+          <Route
+            path="/dashboard/user-profile"
+            element={
+              <Dashboard>
+                <UserProfile />{" "}
+              </Dashboard>
+            }
+          />
         </Routes>
       </Layout>
       <ToastContainer />

@@ -17,6 +17,12 @@
     "patients": "مریض",
     "appointments": "ملاقاتیں",
     "billing": "بلنگ",
-    "reports": "رپورٹس"
+    "reports": "رپورٹس",
+    "english": "انگریزی",
+    "urdu": "اردو",
+    "switchen": "انگریزی میں تبدیل کریں",
+    "switchur": "اردو میں تبدیل کریں",
+    "login": "لاگ ان",
+    "signup": "سائن اپ"
   }
 }

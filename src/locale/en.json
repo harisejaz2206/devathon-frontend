@@ -17,6 +17,12 @@
     "patients": "Patients",
     "appointments": "Appointments",
     "billing": "Billing",
-    "reports": "Reports"
+    "reports": "Reports",
+    "english": "English",
+    "urdu": "Urdu",
+    "switchen": "Switch to English",
+    "switchur": "Switch to Urdu",
+    "login": "Login",
+    "signup": "Sign Up"
   }
 }
