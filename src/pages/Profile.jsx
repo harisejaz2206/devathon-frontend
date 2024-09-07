@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { FaSave, FaEdit } from "react-icons/fa";
+import { FaSave, FaEdit, FaSpinner } from "react-icons/fa";
 import axios from "axios";
+
+const Loader = () => (
+  <div className="flex items-center justify-center">
+    <FaSpinner className="animate-spin text-blue-500" size={24} />
+  </div>
+);
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -15,13 +21,19 @@ const Profile = () => {
     allergies: "",
     bloodGroup: "",
   });
+  const [loading, setLoading] = useState(true); // Added loading state
 
   console.log("profileData: ", profileData);
+
   useEffect(() => {
     // Fetch the profile data on component mount
     const fetchProfileData = async () => {
       try {
         const token = localStorage.getItem("token");
+        
+        // Simulate a 1-second delay before showing the loader
+        await new Promise((resolve) => setTimeout(resolve, 700));
+        
         const response = await axios.get(
           "http://localhost:4000/api/v1/get-profile",
           {
@@ -41,6 +53,8 @@ const Profile = () => {
         }
       } catch (error) {
         console.error("Error fetching profile data", error);
+      } finally {
+        setLoading(false); // Stop loading once the request is complete
       }
     };
 
@@ -66,178 +80,182 @@ const Profile = () => {
             </button>
           </div>
 
-          {/* Editable Profile Form */}
-          <form>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Name */}
-              <div>
-                <label className="block text-gray-800 font-medium mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={profileData.fullName}
-                  onChange={(e) =>
-                    setProfileData({ ...profileData, fullName: e.target.value })
-                  }
-                  disabled={!isEditing}
-                />
+          {/* Display Loader or Profile Form */}
+          {loading ? (
+            <Loader />
+          ) : (
+            <form>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Name */}
+                <div>
+                  <label className="block text-gray-800 font-medium mb-2">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={profileData.fullName}
+                    onChange={(e) =>
+                      setProfileData({ ...profileData, fullName: e.target.value })
+                    }
+                    disabled={!isEditing}
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-gray-800 font-medium mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={profileData.email}
+                    onChange={(e) =>
+                      setProfileData({ ...profileData, email: e.target.value })
+                    }
+                    disabled={!isEditing}
+                  />
+                </div>
+
+                {/* Date of Birth */}
+                <div>
+                  <label className="block text-gray-800 font-medium mb-2">
+                    Date of Birth
+                  </label>
+                  <input
+                    type="date"
+                    className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={profileData.dateOfBirth.split("T")[0]} // Convert to YYYY-MM-DD format
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        dateOfBirth: e.target.value,
+                      })
+                    }
+                    disabled={!isEditing}
+                  />
+                </div>
+
+                {/* Gender */}
+                <div>
+                  <label className="block text-gray-800 font-medium mb-2">
+                    Gender
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={profileData.gender}
+                    onChange={(e) =>
+                      setProfileData({ ...profileData, gender: e.target.value })
+                    }
+                    disabled={!isEditing}
+                  />
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label className="block text-gray-800 font-medium mb-2">
+                    Phone
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={profileData.phone}
+                    onChange={(e) =>
+                      setProfileData({ ...profileData, phone: e.target.value })
+                    }
+                    disabled={!isEditing}
+                  />
+                </div>
+
+                {/* Address */}
+                <div>
+                  <label className="block text-gray-800 font-medium mb-2">
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={profileData.address}
+                    onChange={(e) =>
+                      setProfileData({ ...profileData, address: e.target.value })
+                    }
+                    disabled={!isEditing}
+                  />
+                </div>
+
+                {/* Medical Conditions */}
+                <div>
+                  <label className="block text-gray-800 font-medium mb-2">
+                    Medical Conditions
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={profileData.medicalConditions}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        medicalConditions: e.target.value,
+                      })
+                    }
+                    disabled={!isEditing}
+                  />
+                </div>
+
+                {/* Allergies */}
+                <div>
+                  <label className="block text-gray-800 font-medium mb-2">
+                    Allergies
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={profileData.allergies}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        allergies: e.target.value,
+                      })
+                    }
+                    disabled={!isEditing}
+                  />
+                </div>
+
+                {/* Blood Group */}
+                <div>
+                  <label className="block text-gray-800 font-medium mb-2">
+                    Blood Group
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={profileData.bloodGroup}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        bloodGroup: e.target.value,
+                      })
+                    }
+                    disabled={!isEditing}
+                  />
+                </div>
               </div>
 
-              {/* Email */}
-              <div>
-                <label className="block text-gray-800 font-medium mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={profileData.email}
-                  onChange={(e) =>
-                    setProfileData({ ...profileData, email: e.target.value })
-                  }
-                  disabled={!isEditing}
-                />
-              </div>
-
-              {/* Date of Birth */}
-              <div>
-                <label className="block text-gray-800 font-medium mb-2">
-                  Date of Birth
-                </label>
-                <input
-                  type="date"
-                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={profileData.dateOfBirth.split("T")[0]} // Convert to YYYY-MM-DD format
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      dateOfBirth: e.target.value,
-                    })
-                  }
-                  disabled={!isEditing}
-                />
-              </div>
-
-              {/* Gender */}
-              <div>
-                <label className="block text-gray-800 font-medium mb-2">
-                  Gender
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={profileData.gender}
-                  onChange={(e) =>
-                    setProfileData({ ...profileData, gender: e.target.value })
-                  }
-                  disabled={!isEditing}
-                />
-              </div>
-
-              {/* Phone */}
-              <div>
-                <label className="block text-gray-800 font-medium mb-2">
-                  Phone
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={profileData.phone}
-                  onChange={(e) =>
-                    setProfileData({ ...profileData, phone: e.target.value })
-                  }
-                  disabled={!isEditing}
-                />
-              </div>
-
-              {/* Address */}
-              <div>
-                <label className="block text-gray-800 font-medium mb-2">
-                  Address
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={profileData.address}
-                  onChange={(e) =>
-                    setProfileData({ ...profileData, address: e.target.value })
-                  }
-                  disabled={!isEditing}
-                />
-              </div>
-
-              {/* Medical Conditions */}
-              <div>
-                <label className="block text-gray-800 font-medium mb-2">
-                  Medical Conditions
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={profileData.medicalConditions}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      medicalConditions: e.target.value,
-                    })
-                  }
-                  disabled={!isEditing}
-                />
-              </div>
-
-              {/* Allergies */}
-              <div>
-                <label className="block text-gray-800 font-medium mb-2">
-                  Allergies
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={profileData.allergies}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      allergies: e.target.value,
-                    })
-                  }
-                  disabled={!isEditing}
-                />
-              </div>
-
-              {/* Blood Group */}
-              <div>
-                <label className="block text-gray-800 font-medium mb-2">
-                  Blood Group
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={profileData.bloodGroup}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      bloodGroup: e.target.value,
-                    })
-                  }
-                  disabled={!isEditing}
-                />
-              </div>
-            </div>
-
-            {/* Save Button */}
-            {isEditing && (
-              <div className="mt-6 text-center">
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-blue-500 text-white rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors duration-300"
-                >
-                  <FaSave className="mr-2" /> Save Changes
-                </button>
-              </div>
-            )}
-          </form>
+              {/* Save Button */}
+              {isEditing && (
+                <div className="mt-6 text-center">
+                  <button
+                    type="submit"
+                    className="px-6 py-3 bg-blue-500 text-white rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors duration-300"
+                  >
+                    <FaSave className="mr-2" /> Save Changes
+                  </button>
+                </div>
+              )}
+            </form>
+          )}
         </div>
       </div>
     </div>
