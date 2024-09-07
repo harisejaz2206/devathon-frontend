@@ -10,5 +10,13 @@
     "deactivate": "Deactivate",
     "cancel": "Cancel",
     "toastMessage": "This is a success message!"
+  },
+
+  "header": {
+    "dashboard": "Dashboard",
+    "patients": "Patients",
+    "appointments": "Appointments",
+    "billing": "Billing",
+    "reports": "Reports"
   }
 }

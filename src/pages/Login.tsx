@@ -124,13 +124,6 @@ export default function LoginForm() {
               formik={formik}
             />
 
-            {/* Show/Hide Password */}
-            <div className="flex items-center justify-end text-sm text-blue-700 hover:text-blue-900 cursor-pointer">
-              <span onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? "Hide Password" : "Show Password"}
-              </span>
-            </div>
-
             {/* Remember Me Checkbox and Forgot Password Link */}
             <div className="flex items-center justify-between">
               <div className="text-sm leading-6">
@@ -158,7 +151,7 @@ export default function LoginForm() {
         <p className="mt-10 text-center text-sm text-gray-200">
           Not a member?{" "}
           <Link
-            to="/signup"
+            to="/register"
             className="font-semibold leading-6 text-white hover:text-gray-300 hover:underline"
           >
             Sign Up Now

@@ -10,5 +10,13 @@
     "deactivate": "غیر فعال کریں",
     "cancel": "منسوخ کریں",
     "toastMessage": "یہ ایک کامیابی کا پیغام ہے!"
+  },
+
+  "header": {
+    "dashboard": "ڈیش بورڈ",
+    "patients": "مریض",
+    "appointments": "ملاقاتیں",
+    "billing": "بلنگ",
+    "reports": "رپورٹس"
   }
 }
