@@ -16,6 +16,7 @@ import RegistrationForm from "./pages/Register";
 import Dashboard from "./components/Dashboard";
 import { Switch } from "@headlessui/react";
 import UserProfile from "./components/UserProfile";
+import VerifyEmail from "./components/VerifyEmail";
 
 function App() {
   const token = useSelector(selectAuthToken);
@@ -44,6 +45,7 @@ function App() {
               </Dashboard>
             }
           />
+          <Route path="/verify-account/:token" element={<VerifyEmail />} />
         </Routes>
       </Layout>
       <ToastContainer />

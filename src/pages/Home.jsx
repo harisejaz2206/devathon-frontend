@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "../components/Modal"; // Adjust the import path as needed
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import HeroSection from "../components/HeroSection";
 
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +41,7 @@ const Home = () => {
           onConfirm={() => console.log("Confirmed")}
           onCancel={() => console.log("Cancelled")}
         />
+        <HeroSection />
       </div>
     </>
   );
