@@ -23,6 +23,7 @@ import DashboardHome from "./components/DashboardHome";
 import AppointmentsPage from "./pages/AppointmentsPage";
 import UserListing from "./pages/UserListing";
 import DoctorsListing from "./pages/DoctorListing";
+import PatientsPage from "./pages/PatientsPage";
 
 function App() {
   const token = useSelector(selectAuthToken);
@@ -72,6 +73,14 @@ function App() {
             element={
               <Dashboard>
                 <AppointmentsPage />
+              </Dashboard>
+            }
+          />
+          <Route
+            path="/dashboard/patients"
+            element={
+              <Dashboard>
+                <PatientsPage />
               </Dashboard>
             }
           />
