@@ -1,7 +1,59 @@
-// AddDoctor.jsx
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddDoctor = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    specialization: "",
+  });
+
+  // Function to handle form input change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  // Function to handle form submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token"); // Get the token from localStorage
+
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/v1/create-doctor",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData), // Send form data in the request body
+        }
+      );
+
+      if (response.ok) {
+        toast.success("New doctor has been added!");
+        const data = await response.json();
+        console.log("Doctor added successfully:", data);
+        navigate("/dashboard/doctors");
+        // Optionally reset the form here
+      } else {
+        const errorData = await response.json();
+        console.error("Error adding doctor:", errorData);
+      }
+    } catch (error) {
+      console.error("Error adding doctor:", error);
+    }
+  };
+
   return (
     <div className="p-8 bg-white rounded-lg shadow-xl border max-w-lg mx-auto">
       <div className="flex items-center justify-center">
@@ -10,7 +62,7 @@ const AddDoctor = () => {
         </h2>
       </div>
 
-      <form className="space-y-6">
+      <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
           <label
             htmlFor="fullName"
@@ -20,9 +72,12 @@ const AddDoctor = () => {
           </label>
           <input
             id="fullName"
+            name="fullName"
             type="text"
             className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Dr. John Smith"
+            value={formData.fullName}
+            onChange={handleChange}
           />
         </div>
         <div>
@@ -34,9 +89,12 @@ const AddDoctor = () => {
           </label>
           <input
             id="email"
+            name="email"
             type="email"
             className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="john.smith@example.com"
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
         <div>
@@ -48,9 +106,12 @@ const AddDoctor = () => {
           </label>
           <input
             id="password"
+            name="password"
             type="password"
             className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="••••••••"
+            value={formData.password}
+            onChange={handleChange}
           />
         </div>
         <div>
@@ -62,9 +123,12 @@ const AddDoctor = () => {
           </label>
           <input
             id="specialization"
+            name="specialization"
             type="text"
             className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Cardiologist"
+            value={formData.specialization}
+            onChange={handleChange}
           />
         </div>
         <button
