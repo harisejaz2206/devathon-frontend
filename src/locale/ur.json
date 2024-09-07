@@ -1,0 +1,14 @@
+{
+  "translation": {
+    "test": "قدر کی جانچ کرنا"
+  },
+
+  "home": {
+    "showSuccessToast": "کامیابی کا پیغام دکھائیں",
+    "paymentSuccessful": "ادائیگی کامیاب",
+    "paymentDescription": "آپ کی ادائیگی کامیابی سے مکمل ہو گئی ہے۔",
+    "deactivate": "غیر فعال کریں",
+    "cancel": "منسوخ کریں",
+    "toastMessage": "یہ ایک کامیابی کا پیغام ہے!"
+  }
+}

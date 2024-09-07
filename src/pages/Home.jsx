@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import Modal from "../components/Modal"; // Adjust the import path as needed
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation("home");
 
   const showToast = () => {
-    toast.success("This is a success message!");
+    toast.success(t("toastMessage"));
   };
 
   return (
@@ -16,7 +18,7 @@ const Home = () => {
           onClick={showToast}
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
         >
-          Show Success Toast
+          {t("showSuccessToast")}
         </button>
       </div>
       <div>
@@ -31,7 +33,7 @@ const Home = () => {
         <Modal
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          title="Payment Successful"
+          title={t("paymentSuccessful")}
           description="Your payment has been successfully processed."
           confirmText="Deactivate"
           cancelText="Cancel"

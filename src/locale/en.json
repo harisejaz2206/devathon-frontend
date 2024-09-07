@@ -1,0 +1,14 @@
+{
+  "translation": {
+    "test": "Testing the value"
+  },
+
+  "home": {
+    "showSuccessToast": "Show Success Toast",
+    "paymentSuccessful": "Payment Successful",
+    "paymentDescription": "Your payment has been successfully processed.",
+    "deactivate": "Deactivate",
+    "cancel": "Cancel",
+    "toastMessage": "This is a success message!"
+  }
+}
