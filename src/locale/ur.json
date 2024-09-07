@@ -24,5 +24,16 @@
     "switchur": "اردو میں تبدیل کریں",
     "login": "لاگ ان",
     "signup": "سائن اپ"
+  },
+
+  "sidebar": {
+    "users": "صارفین",
+    "doctors": "ڈاکٹرز",
+    "appointments": "ملاقاتیں",
+    "records": "طبی ریکارڈ",
+    "billing": "بلنگ",
+    "addDoctor": "ڈاکٹر شامل کریں",
+    "switchUr": "اردو میں تبدیل کریں",
+    "switchEn": "انگریزی میں تبدیل کریں"
   }
 }

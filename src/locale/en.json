@@ -24,5 +24,16 @@
     "switchur": "Switch to Urdu",
     "login": "Login",
     "signup": "Sign Up"
+  },
+
+  "sidebar": {
+    "users": "Users",
+    "doctors": "Doctors",
+    "appointments": "Appointments",
+    "records": "Medical Records",
+    "billing": "Billing",
+    "addDoctor": "Add Doctor",
+    "switchUr": "Switch to Urdu",
+    "switchEn": "Switch to English"
   }
 }

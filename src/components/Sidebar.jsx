@@ -5,20 +5,35 @@ import {
   FaCalendarAlt,
   FaFileMedical,
   FaFileInvoiceDollar,
-  FaUserCircle, // Added for the profile link
+  FaUserCircle,
+  FaGlobe, // Added for the language switch
 } from "react-icons/fa";
-
 import Logo from "../assets/images/logo.png";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 
 const Sidebar = () => {
   const user = {
     name: "John Doe",
     email: "john.doe@example.com",
-    // You can replace these with dynamic values as needed
   };
 
+  const { t, i18n } = useTranslation("sidebar");
+  const { currentLanguage, changeLanguage } = useLanguage();
+
+  // Function to handle language change
+  const handleLanguageChange = () => {
+    const newLanguage = currentLanguage === "en" ? "ur" : "en";
+    changeLanguage(newLanguage);
+    i18n.changeLanguage(newLanguage); // Update i18n language
+  };
+
+  const isRTL = currentLanguage === "ur";
   return (
-    <div className="w-64 h-full bg-white shadow-md text-gray-800 flex flex-col">
+    <div
+      className="w-64 h-full bg-white shadow-md text-gray-800 justify-center items-center flex flex-col"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
       {/* Logo Section */}
       <div className="p-6 border-gray-200 flex items-center justify-center">
         <img
@@ -45,7 +60,16 @@ const Sidebar = () => {
               className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
-              <FaUser className="mr-3 text-xl" /> User Profiles
+              <FaUser className="mr-3 text-xl" /> {t("users")}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/doctors"
+              className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
+              activeClassName="bg-gray-100 text-gray-900"
+            >
+              <FaUser className="mr-3 text-xl" /> {t("doctors")}
             </NavLink>
           </li>
           <li>
@@ -54,7 +78,7 @@ const Sidebar = () => {
               className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
-              <FaCalendarAlt className="mr-3 text-xl" /> Appointments
+              <FaCalendarAlt className="mr-3 text-xl" /> {t("appointments")}
             </NavLink>
           </li>
           <li>
@@ -63,7 +87,7 @@ const Sidebar = () => {
               className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
-              <FaFileMedical className="mr-3 text-xl" /> Medical Records
+              <FaFileMedical className="mr-3 text-xl" /> {t("records")}
             </NavLink>
           </li>
           <li>
@@ -72,7 +96,7 @@ const Sidebar = () => {
               className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
-              <FaFileInvoiceDollar className="mr-3 text-xl" /> Billing
+              <FaFileInvoiceDollar className="mr-3 text-xl" /> {t("billing")}
             </NavLink>
           </li>
           <li>
@@ -81,11 +105,22 @@ const Sidebar = () => {
               className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
-              <FaUserCircle className="mr-3 text-xl" /> Add Doctor
+              <FaUserCircle className="mr-3 text-xl" /> {t("addDoctor")}
             </NavLink>
           </li>
         </ul>
       </nav>
+
+      {/* Language Switch Button */}
+      <div className="p-4 border-t border-gray-200 flex justify-center items-center">
+        <button
+          onClick={handleLanguageChange}
+          className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
+        >
+          <FaGlobe className="mr-2 text-xl" />
+          {currentLanguage === "en" ? t("switchUr") : t("switchEn")}
+        </button>
+      </div>
     </div>
   );
 };

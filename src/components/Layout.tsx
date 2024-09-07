@@ -14,6 +14,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     "/dashboard/add-doctor",
     "/dashboard/appointments",
     "/dashboard/users",
+    "/dashboard/doctors",
   ]; // add your routes here
 
   const showNavbarAndFooter = !noNavAndFooter.includes(location.pathname);
