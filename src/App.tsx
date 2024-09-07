@@ -23,6 +23,8 @@ import DashboardHome from "./components/DashboardHome";
 import AppointmentsPage from "./pages/AppointmentsPage";
 import UserListing from "./pages/UserListing";
 import DoctorsListing from "./pages/DoctorListing";
+import PatientSection from "./components/PatientSection";
+import AppointmentsPageUser from "./pages/AppointmentsPageUser.jsx";
 import PatientsPage from "./pages/PatientsPage";
 
 function App() {
@@ -44,6 +46,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
+          <Route path="/patients" element={<PatientSection />} />
+          <Route path="/appointments" element={<AppointmentsPageUser />} />
           <Route
             path="/dashboard"
             element={
