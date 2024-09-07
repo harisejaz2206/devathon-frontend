@@ -77,8 +77,5 @@
 //   //   this.post(`${this.prefix}/social`, data);
 // }
 // export const authService = new AuthService();
-<<<<<<< HEAD
 
 export {};
-=======
->>>>>>> 5621f72c32097b39c6dac13c201a48613a3f37e4
