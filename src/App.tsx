@@ -8,6 +8,7 @@ import Layout from "./components/Layout";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageProvider, useLanguage } from "./context/LanguageContext";
+import LoginForm from "./pages/Login";
 
 function App() {
   // const token = useSelector(selectAuthToken);
@@ -31,24 +32,21 @@ function App() {
     changeLanguage(newLanguage);
   };
   return (
-    // <BrowserRouter>
-    <>
-      <LanguageProvider>
-        <Layout>
-          <h1>{t("test")}</h1>
-          <h3>Current Language: {currentLanguage}</h3>
-          <button type="button" onClick={handleChangeLanguage}>
-            Change Language
-          </button>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-        </Layout>
-      </LanguageProvider>
+    <LanguageProvider>
+      <Layout>
+        <h1>{t("test")}</h1>
+        <h3>Current Language: {currentLanguage}</h3>
+        <button type="button" onClick={handleChangeLanguage}>
+          Change Language
+        </button>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<LoginForm />} />
+        </Routes>
+      </Layout>
       <ToastContainer />
-    </>
-    // </BrowserRouter>
+    </LanguageProvider>
   );
 }
 
@@ -65,6 +63,7 @@ function MainContent() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/login" element={<LoginForm />} />
       </Routes>
     </>
   );
