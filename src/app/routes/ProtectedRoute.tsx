@@ -11,7 +11,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({
   children,
-  allowedRoles = ['admin'],
+  allowedRoles = [],
 }) => {
   // const user = useSelector(selectAuthUser);
   const storedToken = localStorage.getItem("token");

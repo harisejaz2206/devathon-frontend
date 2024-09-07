@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
   FaUser,
@@ -7,15 +7,39 @@ import {
   FaFileInvoiceDollar,
   FaUserCircle, // Added for the profile link
 } from "react-icons/fa";
-
+import axios from "axios";
 import Logo from "../assets/images/logo.png";
 
 const Sidebar = () => {
-  const user = {
+  const [user, setUser] = useState({
     name: "John Doe",
     email: "john.doe@example.com",
-    // You can replace these with dynamic values as needed
-  };
+  });
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const token = localStorage.getItem("token"); // Replace 'token' with the correct key if needed
+        const response = await axios.get(
+          "http://localhost:4000/api/v1/get-profile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const { fullName, email } = response.data.payload;
+        setUser({
+          name: fullName,
+          email: email,
+        });
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   return (
     <div className="w-64 h-full bg-white shadow-md text-gray-800 flex flex-col">
