@@ -4,7 +4,7 @@ import { IToken } from "./interfaces/token.interface";
 interface IAuthState {
   loading: boolean | null;
   user?: IUser | null;
-  token?: IToken;
+  token?: string;
   message?: string | null;
 }
 

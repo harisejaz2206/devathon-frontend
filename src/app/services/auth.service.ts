@@ -34,7 +34,7 @@ class AuthService extends HttpService {
    */
   loginHandler = (
     data: ILogInInterface
-  ): Promise<IResponseInterface<{ token: IToken; user: IUser }>> => {
+  ): Promise<IResponseInterface<{ token: string; user: IUser }>> => {
     return this.post(`${this.prefix}/login`, data);
   };
 
