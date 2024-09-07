@@ -8,27 +8,41 @@ import {
   FaUserCircle, // Added for the profile link
 } from "react-icons/fa";
 
+import Logo from "../assets/images/logo.png";
+
 const Sidebar = () => {
+  const user = {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    // You can replace these with dynamic values as needed
+  };
+
   return (
-    <div className="w-64 h-full bg-white shadow-md text-gray-800">
-      <div className="p-6 border-b border-gray-200">
-        <h1 className="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+    <div className="w-64 h-full bg-white shadow-md text-gray-800 flex flex-col">
+      {/* Logo Section */}
+      <div className="p-6 border-gray-200 flex items-center justify-center">
+        <img
+          src={Logo} // Replace with your logo path
+          alt="Logo"
+          className="w-20 h-20 object-cover rounded-full border-2"
+        />
       </div>
-      <nav className="mt-6">
+
+      {/* User Information Section */}
+      <div className="p-2 border-gray-200 text-center">
+        <h2 className="text-xl font-semibold text-gray-800 mb-1">
+          {user.name}
+        </h2>
+        <p className="text-gray-500 text-sm">{user.email}</p>
+      </div>
+
+      {/* Navigation Links */}
+      <nav className="flex-1 mt-6">
         <ul>
           <li>
             <NavLink
-              to="/profile" // Added profile route
-              className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300"
-              activeClassName="bg-gray-100 text-gray-900"
-            >
-              <FaUserCircle className="mr-3 text-xl" /> Profile
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/user-profiles"
-              className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300"
+              to="/dashboard/users"
+              className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
               <FaUser className="mr-3 text-xl" /> User Profiles
@@ -36,8 +50,8 @@ const Sidebar = () => {
           </li>
           <li>
             <NavLink
-              to="/appointments"
-              className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300"
+              to="/dashboard/appointments"
+              className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
               <FaCalendarAlt className="mr-3 text-xl" /> Appointments
@@ -46,7 +60,7 @@ const Sidebar = () => {
           <li>
             <NavLink
               to="/medical-records"
-              className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300"
+              className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
               <FaFileMedical className="mr-3 text-xl" /> Medical Records
@@ -55,10 +69,19 @@ const Sidebar = () => {
           <li>
             <NavLink
               to="/billing"
-              className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300"
+              className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
               <FaFileInvoiceDollar className="mr-3 text-xl" /> Billing
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/add-doctor"
+              className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
+              activeClassName="bg-gray-100 text-gray-900"
+            >
+              <FaUserCircle className="mr-3 text-xl" /> Add Doctor
             </NavLink>
           </li>
         </ul>

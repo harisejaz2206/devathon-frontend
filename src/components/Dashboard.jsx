@@ -7,7 +7,6 @@ const Dashboard = ({ children }) => {
     <div className="flex h-screen">
       <Sidebar />
       <div className="flex-1 flex flex-col">
-        <DashboardHeader />
         <main className="p-6 overflow-y-auto">{children}</main>
       </div>
     </div>

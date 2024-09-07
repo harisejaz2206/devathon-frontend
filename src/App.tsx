@@ -18,6 +18,10 @@ import { Switch } from "@headlessui/react";
 import UserProfile from "./components/UserProfile";
 import VerifyEmail from "./components/VerifyEmail";
 import FindDoctor from "./pages/FindDoctor";
+import AddDoctor from "./components/AddDoctorForm";
+import DashboardHome from "./components/DashboardHome";
+import AppointmentsPage from "./pages/AppointmentsPage";
+import UserListing from "./pages/UserListing";
 
 function App() {
   const token = useSelector(selectAuthToken);
@@ -39,10 +43,42 @@ function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route
+            path="/dashboard"
+            element={
+              <Dashboard>
+                <DashboardHome />
+              </Dashboard>
+            }
+          />
+          <Route
             path="/dashboard/user-profile"
             element={
               <Dashboard>
                 <UserProfile />{" "}
+              </Dashboard>
+            }
+          />
+          <Route
+            path="/dashboard/add-doctor"
+            element={
+              <Dashboard>
+                <AddDoctor />
+              </Dashboard>
+            }
+          />
+          <Route
+            path="/dashboard/appointments"
+            element={
+              <Dashboard>
+                <AppointmentsPage />
+              </Dashboard>
+            }
+          />
+          <Route
+            path="/dashboard/users"
+            element={
+              <Dashboard>
+                <UserListing />
               </Dashboard>
             }
           />
