@@ -13,7 +13,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({
   children,
   allowedRoles = ['admin'],
 }) => {
-//   const user = useSelector(selectAuthUser);
+  // const user = useSelector(selectAuthUser);
   const storedToken = localStorage.getItem("token");
   const location = useLocation();
 

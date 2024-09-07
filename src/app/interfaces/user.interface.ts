@@ -1,3 +1,6 @@
+// TODO: Modify this according to User Schema
+
+
 export interface IUser {
     _id?: string;
     username?: string;
