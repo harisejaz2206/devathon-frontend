@@ -35,5 +35,36 @@
     "addDoctor": "Add Doctor",
     "switchUr": "Switch to Urdu",
     "switchEn": "Switch to English"
+  },
+
+  "hero": {
+    "text1": "Streamline Patient Management",
+    "text2": "Enhance Care Efficiency",
+    "text3": "Simplify the management of patient information, appointments, and medical records with our advanced system. Streamline your workflow and improve patient care.",
+    "text4": "Get Started",
+    "text5": " Learn More",
+    "text6": "Our Key Features",
+    "text7": "Patient Records",
+    "text8": "Maintain comprehensive and up-to-date patient records with ease. Access medical history, treatment plans, and more in oneplace.",
+    "text9": "Learn More",
+    "text10": "Appointment Scheduling",
+    "text11": "Easily schedule and manage appointments. Send reminders and track upcoming visits to ensure timely patient care.",
+    "text12": "Learn More",
+    "text13": " Secure Data Management",
+    "text14": "Protect patient data with our secure management system. Ensure compliance and safeguard sensitive information.",
+    "text15": "Learn More",
+    "text16": "What Our Users Say",
+    "text17": "The patient management system has transformed our clinic. It's intuitive, efficient, and has improved our workflow significantly.",
+    "text18": "Dr. Jane Doe",
+    "text19": "Clinic Manager",
+    "text20": "A game-changer for patient record management. The ease of use and robust features make it indispensable.",
+    "text21": "Dr. John Smith",
+    "text22": "Family Doctor",
+    "text23": "Ready to Transform Your Practice?",
+    "text24": "Join countless others who have enhanced their patient managementwith our system.",
+    "text25": "Get Started Now",
+    "text26": "Your Company Name. All rights reserved.",
+    "text27": "Privacy Policy",
+    "text28": "Terms of Service"
   }
 }
