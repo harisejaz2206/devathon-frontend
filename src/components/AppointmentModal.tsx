@@ -1,23 +1,29 @@
+// AppointmentModal.tsx
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 interface AppointmentModalProps {
   isOpen: boolean;
   onClose: () => void;
   doctorName: string | null;
+  doctorId: string | null;
 }
 
 export default function AppointmentModal({
   isOpen,
   onClose,
   doctorName,
+  doctorId,
 }: AppointmentModalProps) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [reason, setReason] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const newErrors: { [key: string]: string } = {};
 
@@ -30,9 +36,22 @@ export default function AppointmentModal({
       return;
     }
 
-    alert("Appointment booked!");
-    // Handle form submission here
-    onClose();
+    setIsSubmitting(true);
+
+    try {
+      await axios.post("http://localhost:4000/api/v1/create-appointment", {
+        doctor: doctorId,
+        appointmentDate: date,
+        appointmentTime: time,
+        reason: reason,
+      });
+      toast.success("Appointment has been booked!")
+      onClose();
+    } catch (error) {
+      console.error("Error creating appointment:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -115,9 +134,10 @@ export default function AppointmentModal({
                 </button>
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
-                  Book Appointment
+                  {isSubmitting ? "Booking..." : "Book Appointment"}
                 </button>
               </div>
             </form>
