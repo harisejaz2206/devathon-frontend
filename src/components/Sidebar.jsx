@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
   FaUser,
@@ -8,15 +8,41 @@ import {
   FaUserCircle,
   FaGlobe, // Added for the language switch
 } from "react-icons/fa";
+import axios from "axios";
 import Logo from "../assets/images/logo.png";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../context/LanguageContext";
 
 const Sidebar = () => {
-  const user = {
+  const [user, setUser] = useState({
     name: "John Doe",
     email: "john.doe@example.com",
-  };
+  });
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const token = localStorage.getItem("token"); // Replace 'token' with the correct key if needed
+        const response = await axios.get(
+          "http://localhost:4000/api/v1/get-profile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const { fullName, email } = response.data.payload;
+        setUser({
+          name: fullName,
+          email: email,
+        });
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   const { t, i18n } = useTranslation("sidebar");
   const { currentLanguage, changeLanguage } = useLanguage();
