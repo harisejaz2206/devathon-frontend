@@ -1,80 +1,122 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaSave, FaEdit } from "react-icons/fa";
 
 const Profile = () => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditing(!isEditing);
+  };
+
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div className="bg-blue-800 min-h-screen flex items-center justify-center p-6">
       <div className="bg-white shadow-lg rounded-lg max-w-4xl w-full overflow-hidden">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 h-40 flex items-center justify-center">
-          <img
-            className="w-28 h-28 rounded-full ring-4 ring-white"
-            src="https://via.placeholder.com/150"
-            alt="Profile"
-          />
-        </div>
-
         {/* Profile Information */}
-        <div className="p-6 text-center">
-          <h2 className="text-3xl font-bold text-gray-800">John Doe</h2>
-          <p className="text-gray-600 mt-2">
-            Software Engineer | Tech Enthusiast
-          </p>
-          <p className="text-gray-600 mt-2">Location: San Francisco, CA</p>
-
-          {/* Contact & Social Links */}
-          <div className="flex justify-center space-x-4 mt-6">
-            <a
-              href="mailto:john.doe@example.com"
-              className="text-indigo-500 hover:text-indigo-600 font-semibold"
+        <div className="p-8">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold text-gray-800">Profile</h1>
+            <button
+              onClick={handleEditClick}
+              className="flex items-center text-blue-600 hover:text-blue-800 font-semibold"
             >
-              john.doe@example.com
-            </a>
-            <a
-              href="https://github.com/johndoe"
-              className="text-gray-500 hover:text-gray-700 font-semibold"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/johndoe"
-              className="text-blue-500 hover:text-blue-700 font-semibold"
-            >
-              LinkedIn
-            </a>
+              <FaEdit className="mr-2" /> {isEditing ? "Cancel" : "Edit"}
+            </button>
           </div>
-        </div>
 
-        {/* Bio Section */}
-        <div className="px-6 py-4 text-gray-700">
-          <h3 className="text-xl font-bold mb-2">About Me</h3>
-          <p>
-            Hi, I'm John! A software engineer with 5+ years of experience in web
-            development. I'm passionate about building modern and scalable web
-            applications using technologies like React, Node.js, and AWS.
-            Outside of work, I love to travel and experiment with photography.
-          </p>
-        </div>
+          {/* Editable Profile Form */}
+          <form>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Name */}
+              <div>
+                <label className="block text-gray-800 font-medium mb-2">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  defaultValue="John Doe"
+                  disabled={!isEditing}
+                />
+              </div>
 
-        {/* Skills Section */}
-        <div className="px-6 py-4">
-          <h3 className="text-xl font-bold text-gray-700 mb-2">Skills</h3>
-          <div className="flex flex-wrap gap-2">
-            {["React", "Node.js", "JavaScript", "AWS", "CSS"].map((skill) => (
-              <span
-                key={skill}
-                className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
+              {/* Email */}
+              <div>
+                <label className="block text-gray-800 font-medium mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  defaultValue="john.doe@example.com"
+                  disabled={!isEditing}
+                />
+              </div>
 
-        {/* Footer Section */}
-        <div className="bg-gray-50 p-4 text-center">
-          <p className="text-gray-600">
-            &copy; 2024 John Doe. All rights reserved.
-          </p>
+              {/* Password */}
+              <div>
+                <label className="block text-gray-800 font-medium mb-2">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="********"
+                  disabled={!isEditing}
+                />
+              </div>
+
+              {/* Age */}
+              <div>
+                <label className="block text-gray-800 font-medium mb-2">
+                  Age
+                </label>
+                <input
+                  type="number"
+                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  defaultValue="30"
+                  disabled={!isEditing}
+                />
+              </div>
+
+              {/* Location */}
+              <div>
+                <label className="block text-gray-800 font-medium mb-2">
+                  Location
+                </label>
+                <input
+                  type="text"
+                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  defaultValue="San Francisco, CA"
+                  disabled={!isEditing}
+                />
+              </div>
+
+              {/* Bio */}
+              <div className="md:col-span-2">
+                <label className="block text-gray-800 font-medium mb-2">
+                  Bio
+                </label>
+                <textarea
+                  className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  defaultValue="Hi, I'm John! A software engineer with 5+ years of experience in web development. I'm passionate about building modern and scalable web applications using technologies like React, Node.js, and AWS. Outside of work, I love to travel and experiment with photography."
+                  disabled={!isEditing}
+                  rows={5}
+                />
+              </div>
+            </div>
+
+            {/* Save Button */}
+            {isEditing && (
+              <div className="mt-6 text-center">
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-blue-500 text-white rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors duration-300"
+                >
+                  <FaSave className="mr-2" /> Save Changes
+                </button>
+              </div>
+            )}
+          </form>
         </div>
       </div>
     </div>

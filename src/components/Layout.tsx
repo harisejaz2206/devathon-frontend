@@ -6,7 +6,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
 
   // Pages where you want the Navbar and Footer to be hidden
-  const noNavAndFooter = ["/profile", "/login"]; // add your routes here
+  const noNavAndFooter = ["/login", "/register", "/dashboard/user-profile"]; // add your routes here
 
   const showNavbarAndFooter = !noNavAndFooter.includes(location.pathname);
 
