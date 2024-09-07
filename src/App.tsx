@@ -17,7 +17,8 @@ function App() {
   //   }
   // }, [token]);
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
+    <>
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -25,7 +26,8 @@ function App() {
         </Routes>
       </Layout>
       <ToastContainer />
-    </BrowserRouter>
+    </>
+    // </BrowserRouter>
   );
 }
 
