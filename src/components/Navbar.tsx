@@ -4,94 +4,160 @@ import {
   DisclosurePanel,
   Menu,
   MenuButton,
-  MenuItem,
   MenuItems,
+  MenuItem,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../assets/images/logo.png";
+import Profile from "../assets/images/profile.png";
+import { Link } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext"; // Adjust the import path as needed
+import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
+  const { currentLanguage, changeLanguage } = useLanguage();
+  console.log("🚀 ~ Navbar ~ currentLanguage:", currentLanguage);
+  const { t } = useTranslation("header");
+  const isRTL = currentLanguage === "ur";
+
   return (
-    <Disclosure as="nav" className="bg-white shadow">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 justify-between">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            {/* Mobile menu button */}
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-              <span className="absolute -inset-0.5" />
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon
-                aria-hidden="true"
-                className="block h-6 w-6 group-data-[open]:hidden"
-              />
-              <XMarkIcon
-                aria-hidden="true"
-                className="hidden h-6 w-6 group-data-[open]:block"
-              />
-            </DisclosureButton>
+    <Disclosure as="nav" className="bg-white shadow-md">
+      <div
+        className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8"
+        dir={isRTL ? "rtl" : "ltr"}
+      >
+        <div className="relative flex h-16 items-center">
+          {/* Logo */}
+          <div className="absolute inset-y-0 left-0 flex items-center sm:static">
+            <Link to="/">
+              <img alt="Your Company" src={Logo} className="h-10 w-auto" />
+            </Link>
           </div>
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex flex-shrink-0 items-center">
-              <img alt="Your Company" src={Logo} className="h-8 w-auto" />
-            </div>
+
+          {/* Centered Navigation Links */}
+          <div className="flex flex-1 justify-center">
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <NavLink href="#" text="Dashboard" active />
-              <NavLink href="#" text="Team" />
-              <NavLink href="#" text="Projects" />
-              <NavLink href="#" text="Calendar" />
+              <NavLink href="/dashboard" text={t("dashboard")} />
+              <NavLink href="/patients" text={t("patients")} />
+              <NavLink href="/appointments" text={t("appointments")} />
+              <NavLink href="/billing" text={t("billing")} />
+              <NavLink href="/reports" text={t("reports")} />
             </div>
           </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
+          {/* Right Side Buttons */}
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 space-x-4 sm:static sm:ml-6 sm:pr-0">
+            {/* Language Dropdown */}
+            <Menu as="div" className="relative">
+              <div>
+                <MenuButton className="flex items-center text-gray-500 hover:text-gray-700">
+                  <span className="sr-only">Select language</span>
+                  {currentLanguage === "en" ? "English" : "Urdu"}
+                </MenuButton>
+              </div>
+              <MenuItems className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition">
+                <MenuItem>
+                  <button
+                    onClick={() => changeLanguage()}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    {currentLanguage === "en"
+                      ? "Switch to Urdu"
+                      : "Switch to English"}
+                  </button>
+                </MenuItem>
+              </MenuItems>
+            </Menu>
+
+            {/* Notification Button */}
             <button
               type="button"
-              className="relative rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="relative p-1 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>
-              <BellIcon aria-hidden="true" className="h-6 w-6" />
+              <BellIcon className="h-6 w-6" />
             </button>
 
-            {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-3">
+            {/* Profile Dropdown */}
+            <Menu as="div" className="relative">
               <div>
-                <MenuButton className="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">Open user menu</span>
+                <MenuButton className="flex items-center text-gray-500 hover:text-gray-700">
                   <img
                     alt="Profile"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src={Profile}
                     className="h-8 w-8 rounded-full"
                   />
                 </MenuButton>
               </div>
-              <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition">
+              <MenuItems className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition">
                 <MenuItem>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700">
+                  <Link
+                    to="#"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
                     Your Profile
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700">
+                  <Link
+                    to="#"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
                     Settings
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700">
+                  <Link
+                    to="#"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
                     Sign out
-                  </a>
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>
+
+            {/* Login/Signup Buttons */}
+            <Link
+              to="/login"
+              className="hidden sm:block text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="hidden sm:block text-gray-700 bg-indigo-600 hover:bg-indigo-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Sign up
+            </Link>
           </div>
         </div>
       </div>
 
-      <DisclosurePanel className="sm:hidden">
+      <DisclosurePanel className="sm:hidden bg-white">
         <div className="space-y-1 pb-4 pt-2">
           <MobileNavLink href="#" text="Dashboard" active />
           <MobileNavLink href="#" text="Team" />
           <MobileNavLink href="#" text="Projects" />
           <MobileNavLink href="#" text="Calendar" />
+          <Link
+            to="/login"
+            className="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          >
+            Login
+          </Link>
+          <Link
+            to="/signup"
+            className="block px-4 py-2 text-base font-medium text-gray-700 bg-indigo-600 hover:bg-indigo-700 hover:text-white"
+          >
+            Sign up
+          </Link>
+          <button
+            onClick={() => changeLanguage()}
+            className="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          >
+            {currentLanguage === "en" ? "Switch to Urdu" : "Switch to English"}
+          </button>
         </div>
       </DisclosurePanel>
     </Disclosure>
@@ -108,16 +174,16 @@ function NavLink({
   active?: boolean;
 }) {
   return (
-    <a
-      href={href}
+    <Link
+      to={href}
       className={`inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium ${
         active
           ? "border-indigo-500 text-gray-900"
-          : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+          : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-900"
       }`}
     >
       {text}
-    </a>
+    </Link>
   );
 }
 
@@ -132,12 +198,12 @@ function MobileNavLink({
 }) {
   return (
     <DisclosureButton
-      as="a"
-      href={href}
+      as={Link}
+      to={href}
       className={`block border-l-4 py-2 pl-3 pr-4 text-base font-medium ${
         active
-          ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-          : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
+          ? "bg-gray-100 border-indigo-500 text-gray-900"
+          : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900"
       }`}
     >
       {text}

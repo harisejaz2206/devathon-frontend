@@ -24,25 +24,10 @@ function App() {
       console.log("Token has been set globally");
     }
   }, [token]);
-  const {
-    t,
-    i18n: { changeLanguage, language },
-  } = useTranslation();
-  const [currentLanguage, setCurrentLanguage] = useState(language);
 
-  const handleChangeLanguage = () => {
-    const newLanguage = currentLanguage === "en" ? "ur" : "en";
-    setCurrentLanguage(newLanguage);
-    changeLanguage(newLanguage);
-  };
   return (
     <LanguageProvider>
       <Layout>
-        <h1>{t("test")}</h1>
-        <h3>Current Language: {currentLanguage}</h3>
-        <button type="button" onClick={handleChangeLanguage}>
-          Change Language
-        </button>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
@@ -52,25 +37,6 @@ function App() {
       </Layout>
       <ToastContainer />
     </LanguageProvider>
-  );
-}
-
-function MainContent() {
-  const { currentLanguage, changeLanguage } = useLanguage();
-
-  return (
-    <>
-      <h1>{currentLanguage === "en" ? "English" : "Urdu"} Page</h1>
-      <h3>Current Language: {currentLanguage}</h3>
-      <button type="button" onClick={changeLanguage}>
-        Change Language
-      </button>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/login" element={<LoginForm />} />
-      </Routes>
-    </>
   );
 }
 
