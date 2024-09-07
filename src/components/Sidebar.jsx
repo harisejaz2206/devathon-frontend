@@ -86,7 +86,7 @@ const Sidebar = () => {
               className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
-              <FaUser className="mr-3 text-xl" /> {t("allDoctors")}
+              <FaUser className="mr-3 text-xl" /> {t("All Doctors")}
             </NavLink>
           </li>
           <li>
@@ -95,7 +95,7 @@ const Sidebar = () => {
               className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
-              <FaUser className="mr-3 text-xl" /> {t("allPatients")}
+              <FaUser className="mr-3 text-xl" /> {t("All Patients")}
             </NavLink>
           </li>
         </>
@@ -109,7 +109,7 @@ const Sidebar = () => {
               className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
-              <FaCalendarAlt className="mr-3 text-xl" /> {t("myAppointments")}
+              <FaCalendarAlt className="mr-3 text-xl" /> {t("My Appointments")}
             </NavLink>
           </li>
           <li>
@@ -118,7 +118,7 @@ const Sidebar = () => {
               className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300 rounded-lg"
               activeClassName="bg-gray-100 text-gray-900"
             >
-              <FaUser className="mr-3 text-xl" /> {t("allPatients")}
+              <FaUser className="mr-3 text-xl" /> {t("Patients")}
             </NavLink>
           </li>
         </>
@@ -212,7 +212,7 @@ const Sidebar = () => {
           className="flex items-center px-4 py-2 text-red-600 hover:bg-red-100 hover:text-red-900 transition-colors duration-300 rounded-lg"
         >
           <FaSignOutAlt className="mr-2 text-xl" />
-          {t("signOut")}
+          {t("Sign Out")}
         </button>
       </div>
     </div>

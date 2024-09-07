@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaTrashAlt, FaPencilAlt } from "react-icons/fa";
 import Modal from "react-modal";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
 
 Modal.setAppElement("#root");
 
@@ -114,6 +115,7 @@ const AppointmentsPage = () => {
           );
 
           if (response.data.status) {
+            toast.success("Patient report added")
             setAppointments((prevAppointments) =>
               prevAppointments.map((appointment) =>
                 appointment._id === selectedAppointment._id
