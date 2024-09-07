@@ -1,9 +1,38 @@
 import React, { useState } from "react";
 import Typewriter from "typewriter-effect";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputField from "../components/globals/InputField";
 import DatePicker from "react-datepicker";
+import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from "react-redux";
+import { AppThunkDispatch } from "../store/rootReducer";
+import {
+  selectAuthLoading,
+  selectAuthMessage,
+  selectAuthToken,
+  selectAuthUser,
+} from "../app/features/auth/auth.selectors";
+import { HttpService } from "../app/services/base.service";
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import { signup } from "../app/features/auth/auth.thunk";
+import { handleApiResponse } from "../utils/handle-api-response.utils";
+import { handleError } from "../utils/catch-toast-error";
+
+type FormData = {
+  fullName?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  dateOfBirth?: Date;
+  gender?: string;
+  phone?: string;
+  address?: string;
+  bloodGroup?: string;
+  medicalConditions?: string;
+  allergies?: string; // Optional field
+};
 
 const genderOptions = [
   { value: "", label: "Select Gender" },
@@ -24,39 +53,105 @@ const bloodGroupOptions = [
   { value: "AB-", label: "AB-" },
 ];
 
+const registerSchema = Yup.object().shape({
+  fullName: Yup.string()
+    .required("Full name is required")
+    .min(2, "Full name must be at least 2 characters long"),
+
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+
+  password: Yup.string()
+    .required("Password is required")
+    .min(5, "Password must be at least 5 characters long"),
+
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "Passwords must match")
+    .required("Confirm password is required"),
+
+  dateOfBirth: Yup.date()
+    .required("Date of birth is required")
+    .max(new Date(), "Date of birth cannot be in the future"),
+
+  gender: Yup.string()
+    .oneOf(["Male", "Female", "Other"], "Invalid gender")
+    .required("Gender is required"),
+
+  phone: Yup.string().required("Phone number is required"),
+
+  address: Yup.string()
+    .required("Address is required")
+    .min(5, "Address must be at least 5 characters long"),
+
+  bloodGroup: Yup.string()
+    .oneOf(
+      ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+      "Invalid blood group"
+    )
+    .required("Blood group is required"),
+
+  medicalConditions: Yup.string().optional(), // Optional, can be empty
+
+  allergies: Yup.string().optional(), // Optional, can be empty
+});
+
 export default function RegistrationForm() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    dateOfBirth: new Date(),
-    gender: "",
-    phone: "",
-    address: "",
-    bloodGroup: "",
-    medicalConditions: "",
-    allergies: "",
+  const dispatch = useDispatch<AppThunkDispatch>();
+  const navigate = useNavigate();
+  const loading = useSelector(selectAuthLoading);
+  const token = useSelector(selectAuthToken);
+  const userData = useSelector(selectAuthUser);
+  const message = useSelector(selectAuthMessage);
+
+  const handleSuccess = (result: any) => {
+    navigate("/");
+    toast.success(result.payload.message);
+  };
+
+  const formik = useFormik<FormData>({
+    initialValues: {
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      dateOfBirth: new Date(), // or an empty string if you prefer
+      gender: "", // or set a default value if needed
+      phone: "",
+      address: "",
+      bloodGroup: "", // or set a default value if needed
+      medicalConditions: "",
+      allergies: "",
+    },
+    validationSchema: registerSchema,
+    validateOnBlur: true,
+    onSubmit: (values) => {
+      console.log("before dispatch values", values);
+      dispatch(signup(values))
+        .then((result) => {
+          console.log("result", result);
+          handleApiResponse({
+            result,
+            handleSuccess: () => handleSuccess(result),
+            formik,
+          });
+        })
+        .catch(handleError);
+    },
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const hanldeNavigateToHome = () => {
+    navigate("/");
   };
 
   const handleDateChange = (date: Date | null) => {
-    setFormData((prev) => ({
-      ...prev,
-      dateOfBirth: date || new Date(),
-    }));
+    if (date) {
+      formik.setFieldValue("dateOfBirth", date);
+    }
   };
+
+  console.log("formik", formik.values);
+  console.log("Formik errors:", formik.errors);
 
   return (
     <div className="flex min-h-screen flex-col justify-center py-12 px-6 sm:px-8 lg:px-12 bg-blue-900">
@@ -76,7 +171,10 @@ export default function RegistrationForm() {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-2xl">
         <div className="bg-white px-6 py-12 shadow-lg rounded-lg sm:px-8">
-          <form className="grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-x-6">
+          <form
+            className="grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-x-6"
+            onSubmit={formik.handleSubmit}
+          >
             {/* Full Name Field */}
             <div className="flex flex-col">
               <label
@@ -89,8 +187,7 @@ export default function RegistrationForm() {
                 placeholder="Full Name"
                 name="fullName"
                 type="text"
-                value={formData.fullName}
-                onChange={handleChange}
+                formik={formik}
               />
             </div>
 
@@ -106,8 +203,7 @@ export default function RegistrationForm() {
                 placeholder="Email"
                 name="email"
                 type="email"
-                value={formData.email}
-                onChange={handleChange}
+                formik={formik}
               />
             </div>
 
@@ -123,8 +219,7 @@ export default function RegistrationForm() {
                 placeholder="Password"
                 name="password"
                 type="password"
-                value={formData.password}
-                onChange={handleChange}
+                formik={formik}
               />
             </div>
 
@@ -140,8 +235,7 @@ export default function RegistrationForm() {
                 placeholder="Confirm Password"
                 name="confirmPassword"
                 type="password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
+                formik={formik}
               />
             </div>
 
@@ -154,7 +248,7 @@ export default function RegistrationForm() {
                 Date of Birth
               </label>
               <DatePicker
-                selected={formData.dateOfBirth}
+                selected={formik.values.dateOfBirth}
                 onChange={handleDateChange}
                 className="block w-full mt-1 p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm h-12"
                 dateFormat="yyyy/MM/dd"
@@ -173,8 +267,8 @@ export default function RegistrationForm() {
                 name="gender"
                 id="gender"
                 className="block p-2 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm h-12"
-                value={formData.gender}
-                onChange={handleChange}
+                value={formik.values.gender}
+                onChange={formik.handleChange}
               >
                 {genderOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -196,8 +290,7 @@ export default function RegistrationForm() {
                 placeholder="Phone Number"
                 name="phone"
                 type="tel"
-                value={formData.phone}
-                onChange={handleChange}
+                formik={formik}
               />
             </div>
 
@@ -213,8 +306,8 @@ export default function RegistrationForm() {
                 name="bloodGroup"
                 id="bloodGroup"
                 className="block w-full p-2 mt-0 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm h-12"
-                value={formData.bloodGroup}
-                onChange={handleChange}
+                value={formik.values.bloodGroup}
+                onChange={formik.handleChange}
               >
                 {bloodGroupOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -234,8 +327,8 @@ export default function RegistrationForm() {
               <textarea
                 placeholder="Address"
                 name="address"
-                value={formData.address}
-                onChange={handleChange}
+                value={formik.values.address}
+                onChange={formik.handleChange}
                 className="block w-full p-2 mt-0 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm h-24"
               />
             </div>
@@ -253,8 +346,8 @@ export default function RegistrationForm() {
                 id="medicalConditions"
                 className="block w-full p-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm h-24"
                 rows={4}
-                value={formData.medicalConditions}
-                onChange={handleChange}
+                value={formik.values.medicalConditions}
+                onChange={formik.handleChange}
               />
             </div>
 
@@ -271,8 +364,8 @@ export default function RegistrationForm() {
                 id="allergies"
                 className="block w-full p-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm h-24"
                 rows={4}
-                value={formData.allergies}
-                onChange={handleChange}
+                value={formik.values.medicalConditions}
+                onChange={formik.handleChange}
               />
             </div>
 
